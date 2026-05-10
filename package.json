@@ -5,11 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:debug-worker": "NEXT_DEBUG_BUILD_WORKER=0 next build",
     "start": "next start",
     "lint": "eslint"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "next": "16.2.6",
+    "onairos": "^8.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
