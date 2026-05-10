@@ -24,7 +24,9 @@ type OnairosModule = {
   default?: Partial<OnairosModule>;
 };
 
-const API_KEY = process.env.NEXT_PUBLIC_ONAIROS_API_KEY ?? "";
+const API_KEY =
+  process.env.NEXT_PUBLIC_ONAIROS_API_KEY ??
+  "dev_d1dddadfc599b49ff019527b3bd5a1323e1417828c64310cb6fe3cac613899e8";
 
 export default function OnairosDebugClient() {
   const [Button, setButton] = useState<ComponentType<OnairosButtonProps> | null>(null);
