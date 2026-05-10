@@ -6,6 +6,8 @@ import type { ComponentType } from "react";
 type OnairosButtonProps = {
   webpageName: string;
   requestData: Record<string, { type: string; reward: string }>;
+  apiKey?: string;
+  skipApiKeyInitialization?: boolean;
   autoFetch?: boolean;
   backgroundLoadData?: boolean;
   preferencesMbti?: boolean;
@@ -48,23 +50,13 @@ export default function OnairosDebugClient() {
 
         const mod = (await import("onairos")) as OnairosModule;
         const fallback = mod.default && typeof mod.default === "object" ? mod.default : {};
-        const initializeApiKey = mod.initializeApiKey ?? fallback.initializeApiKey;
         const OnairosButton = mod.OnairosButton ?? fallback.OnairosButton;
 
         if (!OnairosButton) throw new Error("OnairosButton export was not found.");
 
-        if (initializeApiKey) {
-          await initializeApiKey({
-            apiKey: API_KEY,
-            environment: "production",
-            enableLogging: true,
-            platform: "web",
-          });
-        }
-
         if (!cancelled) {
           setButton(() => OnairosButton);
-          setStatus("Onairos SDK ready.");
+          setStatus("Onairos SDK loaded. API-key validation is skipped on this debug page to isolate CORS.");
         }
       } catch (err) {
         if (!cancelled) {
@@ -97,6 +89,8 @@ export default function OnairosDebugClient() {
         {Button ? (
           <Button
             webpageName="inyo"
+            apiKey={API_KEY}
+            skipApiKeyInitialization={true}
             testMode={false}
             autoFetch={false}
             backgroundLoadData={true}
